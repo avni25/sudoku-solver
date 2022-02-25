@@ -4,7 +4,7 @@ const solveButton2 = document.querySelector("#solve-btn2");
 const squares = 81;
 var given_numbers=[];
 var arr=[];
-
+// https://rapidapi.com/sayantikag98/api/sudoku-solver2/
 for(var i=0;i<squares; i++){
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
