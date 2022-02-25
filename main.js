@@ -1,9 +1,12 @@
 const puzzleBoard = document.querySelector("#puzzle-board");
 const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
+const cleanButton = document.getElementById("clean-btn");
 const squares = 81;
-var s;
+
+
 // https://rapidapi.com/sayantikag98/api/sudoku-solver2/
+
 for(var i=0;i<squares; i++){
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
@@ -45,9 +48,23 @@ const getVals =() =>{
     return arr.join("");
 }
 
-const solve = ()=>{
-    var d = "";
-    var res="";
+function fillCells(res){
+    const inputs = document.querySelectorAll("input");
+    if(res.canBeSolved && res.answer){
+        console.log("answer: "+res.answer);
+        for(var i=0;i<res.answer.length;i++){
+            inputs[i].value=res.answer[i];
+        }
+    }
+}
+
+function cleanCells(){
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(input => input.value="");
+}
+
+function solve(){
+    var d = "";    
     d = getVals();
     console.log("solve: "+d);
     var options = {
@@ -65,17 +82,18 @@ const solve = ()=>{
       };
       
       axios.request(options).then(function (response) {
-        //   console.log(response.data.answer);
-          res = response.data.answer;
-          console.log("res: "+res);
+          console.log(response.data);
+          fillCells(response.data);
       }).catch(function (error) {
           console.error(error);
       });
-      return res;
 }
 
-solveButton.addEventListener("click", ()=>{
-    s = solve();
-    console.log("s: "+s);
-});
+solveButton.addEventListener("click", solve);
 solveButton2.addEventListener("click", getVals);
+cleanButton.addEventListener("click", cleanCells);
+
+
+
+
+
