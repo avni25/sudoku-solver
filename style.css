@@ -32,9 +32,10 @@ h1{
     margin: 10px 10px;
 }
 .generate-container{
-    /* margin: auto; */
+    margin: auto;
     padding: 3px;
-    display: flex;
+    display: inline-block;
+    align-content: center;
     /* background-color: rgb(87, 65, 65); */
     width: 450px;
     height: 50px;
