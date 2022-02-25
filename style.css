@@ -1,15 +1,22 @@
 #game{    
     margin: auto;
     padding: 10px;
-}
-#button-area{
-    position: center;
     padding: 20px;
-    
 }
+h1{
+    margin-left: 35%;
+    color: rgb(16, 50, 240);
+}
+.button-container{
+    width: 450px;
+    margin: auto;
+    /* background-color: gray; */
+}
+
 #puzzle-board{
     width: 450px;
     height: 450px;
+    margin: auto;
 }
 
 #puzzle-board input{
@@ -22,8 +29,18 @@
 }
 #gen-input{
     width: 70px;
-    margin-top: 10px;
+    margin: 10px 10px;
 }
+.generate-container{
+    /* margin: auto; */
+    padding: 3px;
+    display: flex;
+    /* background-color: rgb(87, 65, 65); */
+    width: 450px;
+    height: 50px;
+    
+}
+
 /* #input-cell-0,#input-cell-1,#input-cell-2{
     background-color: rgb(235, 232, 232);
 } */
