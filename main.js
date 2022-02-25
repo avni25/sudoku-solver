@@ -2,7 +2,7 @@ const puzzleBoard = document.querySelector("#puzzle-board");
 const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
 const squares = 81;
-
+var s;
 // https://rapidapi.com/sayantikag98/api/sudoku-solver2/
 for(var i=0;i<squares; i++){
     const cell = document.createElement("input");
@@ -47,6 +47,7 @@ const getVals =() =>{
 
 const solve = ()=>{
     var d = "";
+    var res="";
     d = getVals();
     console.log("solve: "+d);
     var options = {
@@ -64,11 +65,17 @@ const solve = ()=>{
       };
       
       axios.request(options).then(function (response) {
-          console.log(response.data);
+        //   console.log(response.data.answer);
+          res = response.data.answer;
+          console.log("res: "+res);
       }).catch(function (error) {
           console.error(error);
       });
+      return res;
 }
 
-solveButton.addEventListener("click", solve);
+solveButton.addEventListener("click", ()=>{
+    s = solve();
+    console.log("s: "+s);
+});
 solveButton2.addEventListener("click", getVals);
