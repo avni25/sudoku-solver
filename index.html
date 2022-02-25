@@ -9,14 +9,22 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div id="puzzle-board">
+    <div id="game">
+        <div id="puzzle-board">
 
+        </div>
+        <div class="buton-area">
+            <button id="solve-btn">Solve (API)</button>
+            <button id="solve-btn2">Solve (code)</button>
+            <button id="clean-btn">Clean Board</button>
+            <div id="generate-container">
+                <button id="generate-btn">Generate</button>
+                <input id="gen-input" type="number" max="81" value="0"/>
+            </div>
+            
+        </div>
     </div>
-    <div class="buton-area">
-        <button id="solve-btn">Click me</button>
-        <button id="solve-btn2">Click me2</button>
-        <button id="clean-btn">Clean</button>
-    </div>
+    
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="main.js"></script>

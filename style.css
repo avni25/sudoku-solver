@@ -1,3 +1,12 @@
+#game{    
+    margin: auto;
+    padding: 10px;
+}
+#button-area{
+    position: center;
+    padding: 20px;
+    
+}
 #puzzle-board{
     width: 450px;
     height: 450px;

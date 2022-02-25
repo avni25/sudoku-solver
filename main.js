@@ -2,6 +2,8 @@ const puzzleBoard = document.querySelector("#puzzle-board");
 const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
 const cleanButton = document.getElementById("clean-btn");
+const generateButton = document.getElementById("generate-btn");
+const genInput = document.getElementById("gen-input");
 const squares = 81;
 
 
@@ -12,6 +14,7 @@ for(var i=0;i<squares; i++){
     cell.setAttribute("type", "number");
     cell.setAttribute("min", 0);
     cell.setAttribute("max", 9);
+    cell.setAttribute("class", "input-cell")
     puzzleBoard.appendChild(cell);
 }
 
@@ -19,7 +22,7 @@ for(var i=0;i<squares; i++){
 const getVals =() =>{
     var given_numbers=[];
     var arr=[];
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll(".input-cell");
     inputs.forEach((input)=>{
         if(input.value){
             given_numbers.push(input.value);
@@ -49,7 +52,7 @@ const getVals =() =>{
 }
 
 function fillCells(res){
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll(".input-cell");
     if(res.canBeSolved && res.answer){
         console.log("answer: "+res.answer);
         for(var i=0;i<res.answer.length;i++){
@@ -59,7 +62,7 @@ function fillCells(res){
 }
 
 function cleanCells(){
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll(".input-cell");
     inputs.forEach(input => input.value="");
 }
 
@@ -89,10 +92,26 @@ function solve(){
       });
 }
 
+function generateGame(num){
+    cleanCells();
+    const inputs = document.querySelectorAll(".input-cell");
+    for(var i=0; i<num;i++){
+        var val = Math.floor(Math.random()*9)+1;
+        var index = Math.floor(Math.random() * squares);
+        inputs[index].value = val;
+    }
+
+}
+
+
+
 solveButton.addEventListener("click", solve);
 solveButton2.addEventListener("click", getVals);
 cleanButton.addEventListener("click", cleanCells);
-
+generateButton.addEventListener("click", ()=>{
+    console.log(typeof parseInt(genInput.value));
+    generateGame(parseInt(genInput.value));
+})
 
 
 
