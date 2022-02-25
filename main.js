@@ -14,11 +14,13 @@ const min =0, max = 9;
 // https://rapidapi.com/sayantikag98/api/sudoku-solver2/
 
 for(var i=0;i<squares; i++){
+    var t = "input-cell-"+i;
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
     cell.setAttribute("min", min);
     cell.setAttribute("max", max);
     cell.setAttribute("class", "input-cell");
+    cell.setAttribute("id", t);
     puzzleBoard.appendChild(cell);
 }
 
@@ -114,13 +116,10 @@ function generateGame(num){
 }
 
 function test(){
-    const inputs = document.querySelectorAll(".input-cell");
+    const inputs = document.querySelectorAll(".input-cell");    
     for(var i=0; i<inputs.length;i++){
         inputs[i].value = i;
     }
-
-
-
 }
 
 
@@ -129,7 +128,12 @@ solveButton.addEventListener("click", solve);
 solveButton2.addEventListener("click", test);
 cleanButton.addEventListener("click", cleanCells);
 generateButton.addEventListener("click", ()=>{
-    generateGame(parseInt(genInput.value));
+    if(parseInt(genInput.value)<=squares){
+        generateGame(parseInt(genInput.value));
+    }else{
+        resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
+    }
+    
 })
 
 

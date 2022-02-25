@@ -18,4 +18,12 @@
     box-sizing: border-box;
     border-spacing: 0;
     border: 1px solid #ccc;
+    text-align: right; 
 }
+#gen-input{
+    width: 70px;
+    margin-top: 10px;
+}
+/* #input-cell-0,#input-cell-1,#input-cell-2{
+    background-color: rgb(235, 232, 232);
+} */
