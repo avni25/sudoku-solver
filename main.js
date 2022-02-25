@@ -1,8 +1,9 @@
 const puzzleBoard = document.querySelector("#puzzle-board");
 const solveButton = document.querySelector("#solve-btn");
+const solveButton2 = document.querySelector("#solve-btn2");
 const squares = 81;
-const given_numbers=[];
-
+var given_numbers=[];
+var arr=[];
 
 for(var i=0;i<squares; i++){
     const cell = document.createElement("input");
@@ -19,10 +20,25 @@ const getVals =() =>{
         if(input.value){
             given_numbers.push(input.value);
         }else{
-            given_numbers.push(".");
+            given_numbers.push("x");
         }
     });
     console.log(given_numbers);
+    for(var i=0;i < given_numbers.length; i++){
+        var count=0;
+        if(given_numbers[i]=="x"){
+            var j=i;
+            while(given_numbers[j]=="x"){
+                count++;
+                j++;
+            }
+            i=j;
+            arr.push("x"+count+"x");
+        }else{
+            arr.push(given_numbers[i]);
+        }
+    }
+    console.log(arr);
 }
 
 const solve = ()=>{
@@ -47,3 +63,4 @@ const solve = ()=>{
 }
 
 solveButton.addEventListener("click", solve);
+solveButton2.addEventListener("click", getVals);
