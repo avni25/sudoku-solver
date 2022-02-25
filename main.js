@@ -1,20 +1,24 @@
 const puzzleBoard = document.querySelector("#puzzle-board");
+const buttonArea = document.querySelector(".buton-container");
 const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
 const cleanButton = document.getElementById("clean-btn");
 const generateButton = document.getElementById("generate-btn");
 const genInput = document.getElementById("gen-input");
-const squares = 81;
+const resultText = document.getElementById("result-text");
 
+
+const squares = 81;
+const min =0, max = 9;
 
 // https://rapidapi.com/sayantikag98/api/sudoku-solver2/
 
 for(var i=0;i<squares; i++){
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
-    cell.setAttribute("min", 0);
-    cell.setAttribute("max", 9);
-    cell.setAttribute("class", "input-cell")
+    cell.setAttribute("min", min);
+    cell.setAttribute("max", max);
+    cell.setAttribute("class", "input-cell");
     puzzleBoard.appendChild(cell);
 }
 
@@ -30,7 +34,6 @@ const getVals =() =>{
             given_numbers.push("x");
         }
     });
-    // console.log(given_numbers);
     var count=0;
     for(var i=0;i < given_numbers.length; i++){
         
@@ -47,7 +50,7 @@ const getVals =() =>{
             arr.push("x"+count+"x");
         }
     }
-    console.log(arr.join(""));
+    // console.log(arr.join(""));
     return arr.join("");
 }
 
@@ -58,18 +61,24 @@ function fillCells(res){
         for(var i=0;i<res.answer.length;i++){
             inputs[i].value=res.answer[i];
         }
+    }else{        
+        resultText.textContent = "No solution!";        
     }
 }
 
 function cleanCells(){
     const inputs = document.querySelectorAll(".input-cell");
-    inputs.forEach(input => input.value="");
+    inputs.forEach(input => {
+        input.value="";
+        input.setAttribute("style", "color: black;font-weight: normal;");
+    });
+    resultText.textContent = "";
 }
 
 function solve(){
     var d = "";    
     d = getVals();
-    console.log("solve: "+d);
+    // console.log("solve: "+d);
     var options = {
         method: 'POST',
         url: 'https://sudoku-solver2.p.rapidapi.com/',
@@ -99,17 +108,27 @@ function generateGame(num){
         var val = Math.floor(Math.random()*9)+1;
         var index = Math.floor(Math.random() * squares);
         inputs[index].value = val;
+        inputs[index].setAttribute("style", "color: red;font-weight: bold;");
     }
+
+}
+
+function test(){
+    const inputs = document.querySelectorAll(".input-cell");
+    for(var i=0; i<inputs.length;i++){
+        inputs[i].value = i;
+    }
+
+
 
 }
 
 
 
 solveButton.addEventListener("click", solve);
-solveButton2.addEventListener("click", getVals);
+solveButton2.addEventListener("click", test);
 cleanButton.addEventListener("click", cleanCells);
 generateButton.addEventListener("click", ()=>{
-    console.log(typeof parseInt(genInput.value));
     generateGame(parseInt(genInput.value));
 })
 
