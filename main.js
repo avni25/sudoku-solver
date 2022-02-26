@@ -4,8 +4,10 @@ const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
 const cleanButton = document.getElementById("clean-btn");
 const generateButton = document.getElementById("generate-btn");
+const testButton = document.getElementById("test-btn");
 const genInput = document.getElementById("gen-input");
 const resultText = document.getElementById("result-text");
+
 
 
 const squares = 81;
@@ -124,7 +126,23 @@ function solve(){
 function generateGame(num){
     cleanCells();
     const inputs = document.querySelectorAll(".input-cell");
+    for(var i=0; i<num;i++){
+        var val = Math.floor(Math.random()*9)+1;
+        var index = Math.floor(Math.random() * squares);
+        inputs[index].value = val; 
+        inputs[index].setAttribute("style", "color: red;font-weight: bold;");
+    }
+
     
+}
+
+function hasDuplicate(arr){
+    return (new Set(arr)).size !== arr.length;
+}
+
+function generateSolvableGame(num){
+    cleanCells();
+    const inputs = document.querySelectorAll(".input-cell");
     var count =0;
     while(true){
         var is_ver_ok =false;
@@ -197,34 +215,9 @@ function generateGame(num){
 
     console.log(count);
     
-
-    
-
 }
 
-function hasDuplicate(arr){
-    return (new Set(arr)).size !== arr.length;
-}
 
-function checkHorizontally(arr){
-    var res = true;
-    for(var i=0;i<9;i++){
-
-    }
-    return res;
-}
-
-function checkVertically(){
-    var res = true;
-
-    return res;
-}
-
-function checkSquare(){
-    var res = true;
-
-    return res;
-}
 
 
 
@@ -248,7 +241,15 @@ generateButton.addEventListener("click", ()=>{
         resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
     }
     
-})
+});
+
+testButton.addEventListener("click", ()=>{
+    if(parseInt(genInput.value)<=squares){
+        generateSolvableGame(parseInt(genInput.value));
+    }else{
+        resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
+    }
+});
 
 
 
