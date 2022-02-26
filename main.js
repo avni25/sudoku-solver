@@ -124,69 +124,79 @@ function solve(){
 function generateGame(num){
     cleanCells();
     const inputs = document.querySelectorAll(".input-cell");
-    var is_ver_ok =true;
-    var is_hor_ok =true;
-    var is_sq_ok = true;
     
-    while(is_hor_ok && is_ver_ok && is_sq_ok){
+    var count =0;
+    while(true){
+        var is_ver_ok =false;
+        var is_hor_ok =false;
+        var is_sq_ok = false;
 
-    }
-
-    for(var i=0; i<num;i++){
-        var val = Math.floor(Math.random()*9)+1;
-        var index = Math.floor(Math.random() * squares);
-        inputs[index].value = val; 
-        inputs[index].setAttribute("style", "color: red;font-weight: bold;");
-    }
-    
-    // check horizontally
-    for(var i=0; i<inputs.length; i+=9){
-        var arr=[];
-        for(var j =i; j<i+9 ; j++){
-            if(inputs[j].value != "")
-                arr.push(inputs[j].value);
+        for(var i=0; i<num;i++){
+            var val = Math.floor(Math.random()*9)+1;
+            var index = Math.floor(Math.random() * squares);
+            inputs[index].value = val; 
+            inputs[index].setAttribute("style", "color: red;font-weight: bold;");
         }
-        // console.log(arr);
-        if(hasDuplicate(arr)){
-            // console.log(`duplicate horizontal on row: ${i}`);
-            is_hor_ok = false;
-        }
-    }
-
-    //check vertically
-    for(var i=0; i<9; i++){
-        var arr =[];
-        for(var j=i; j<inputs.length; j+=9){
-            if(inputs[j].value != "")
-                arr.push(inputs[j].value);
-        }
-        // console.log(arr);
-        if(hasDuplicate(arr)){
-            // console.log(`duplicate vertical on col: ${i}`);
-            is_ver_ok = false;
-        }
-    }
-
-    //check square
-    for(var i=0; i<squares;i+=27){
-        for(var j=i; j < i+9; j+=3){
-            // console.log(j);
+        
+        // check horizontally
+        for(var i=0; i<inputs.length; i+=9){
             var arr=[];
-            for(var z =j; z<j+3; z++){
-                // console.log(`${z} ${z+9} ${z+18}`);
-                if(inputs[z].value != "") arr.push(inputs[z].value);
-                if(inputs[z+9].value != "") arr.push(inputs[z+9].value);
-                if(inputs[z+18].value != "") arr.push(inputs[z+18].value);
-                    
+            for(var j =i; j<i+9 ; j++){
+                if(inputs[j].value != "")
+                    arr.push(inputs[j].value);
             }
             // console.log(arr);
             if(hasDuplicate(arr)){
-                // console.log(`duplicate square on square: ${j}`);
-                is_sq_ok = false;
+                console.log(`duplicate horizontal on row: ${i}`);
+                is_hor_ok = true;
             }
-            // console.log("------");
         }
+    
+        //check vertically
+        for(var i=0; i<9; i++){
+            var arr =[];
+            for(var j=i; j<inputs.length; j+=9){
+                if(inputs[j].value != "")
+                    arr.push(inputs[j].value);
+            }
+            // console.log(arr);
+            if(hasDuplicate(arr)){
+                console.log(`duplicate vertical on col: ${i}`);
+                is_ver_ok = true;
+            }
+        }
+    
+        //check square
+        for(var i=0; i<squares;i+=27){
+            for(var j=i; j < i+9; j+=3){
+                // console.log(j);
+                var arr=[];
+                for(var z =j; z<j+3; z++){
+                    // console.log(`${z} ${z+9} ${z+18}`);
+                    if(inputs[z].value != "") arr.push(inputs[z].value);
+                    if(inputs[z+9].value != "") arr.push(inputs[z+9].value);
+                    if(inputs[z+18].value != "") arr.push(inputs[z+18].value);
+                        
+                }
+                console.log(arr);
+                if(hasDuplicate(arr)){
+                    console.log(`duplicate square on square: ${j}`);
+                    is_sq_ok = true;
+                }
+                // console.log("------");
+            }
+        }
+
+        count++;
+        if(!is_hor_ok && !is_ver_ok && !is_sq_ok){
+            break;
+        }
+
+
     }
+
+    console.log(count);
+    
 
     
 
