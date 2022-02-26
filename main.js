@@ -124,14 +124,82 @@ function solve(){
 function generateGame(num){
     cleanCells();
     const inputs = document.querySelectorAll(".input-cell");
+    var is_ver_ok =false;
+    var is_hor_ok =false;
+    
     for(var i=0; i<num;i++){
         var val = Math.floor(Math.random()*9)+1;
         var index = Math.floor(Math.random() * squares);
         inputs[index].value = val; 
         inputs[index].setAttribute("style", "color: red;font-weight: bold;");
     }
+    
+    // check horizontally
+    for(var i=0; i<inputs.length; i+=9){
+        var arr=[];
+        for(var j =i; j<i+9 ; j++){
+            if(inputs[j].value != "")
+                arr.push(inputs[j].value);
+        }
+        // console.log(arr);
+        if(hasDuplicate(arr)){
+            console.log(`duplicate horizontal on row: ${i}`);
+            is_hor_ok = true;
+        }
+    }
+
+    //check vertically
+    for(var i=0; i<9; i++){
+        var arr =[];
+        for(var j=i; j<inputs.length; j+=9){
+            if(inputs[j].value != "")
+                arr.push(inputs[j].value);
+        }
+        // console.log(arr);
+        if(hasDuplicate(arr)){
+            console.log(`duplicate vertical on col: ${i}`);
+            is_ver_ok = true;
+        }
+    }
+
+    //check square
+    for(var i=0; i<squares;i+=27){
+        for(var j=i; j < i+3; j++){
+            for(var z =0; z<3; z++){
+                console.log();
+            }
+        }
+    }
+
 
 }
+
+function hasDuplicate(arr){
+    return (new Set(arr)).size !== arr.length;
+}
+
+function checkHorizontally(arr){
+    var res = true;
+    for(var i=0;i<9;i++){
+
+    }
+    return res;
+}
+
+function checkVertically(){
+    var res = true;
+
+    return res;
+}
+
+function checkSquare(){
+    var res = true;
+
+    return res;
+}
+
+
+
 
 function test(){
     const inputs = document.querySelectorAll(".input-cell");    
