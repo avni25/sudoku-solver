@@ -10,13 +10,14 @@ h1{
 .button-container{
     width: 450px;
     margin: auto;
-    /* background-color: gray; */
+    
 }
 
 #puzzle-board{
     width: 450px;
     height: 450px;
     margin: auto;
+    
 }
 
 #puzzle-board input{
@@ -24,7 +25,7 @@ h1{
     height:50px;
     box-sizing: border-box;
     border-spacing: 0;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(177, 172, 172);
     text-align: right; 
 }
 #gen-input{

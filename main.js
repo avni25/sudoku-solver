@@ -24,6 +24,24 @@ for(var i=0;i<squares; i++){
     puzzleBoard.appendChild(cell);
 }
 
+for(var i=2;i<squares; i+=3){
+    const inputs = document.querySelectorAll("input");      
+    inputs[i].setAttribute("style", "border-right: 2px solid black;");
+}
+
+
+for(var i=27, j=54;i<=35; i++, j++){
+    const inputs = document.querySelectorAll("input");
+    var style  = "border-top: 2px solid black;";
+    if(i == 29 || i == 35 || j==56){
+        style += "border-right: 2px solid black;";
+    }else if(i == 33){
+        style += "border-left: 2px solid black;";
+    }      
+    inputs[i].setAttribute("style", style);
+    inputs[j].setAttribute("style", style);
+}
+
 
 const getVals =() =>{
     var given_numbers=[];
@@ -109,7 +127,7 @@ function generateGame(num){
     for(var i=0; i<num;i++){
         var val = Math.floor(Math.random()*9)+1;
         var index = Math.floor(Math.random() * squares);
-        inputs[index].value = val;
+        inputs[index].value = val; 
         inputs[index].setAttribute("style", "color: red;font-weight: bold;");
     }
 
