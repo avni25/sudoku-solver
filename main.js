@@ -124,9 +124,14 @@ function solve(){
 function generateGame(num){
     cleanCells();
     const inputs = document.querySelectorAll(".input-cell");
-    var is_ver_ok =false;
-    var is_hor_ok =false;
+    var is_ver_ok =true;
+    var is_hor_ok =true;
+    var is_sq_ok = true;
     
+    while(is_hor_ok && is_ver_ok && is_sq_ok){
+
+    }
+
     for(var i=0; i<num;i++){
         var val = Math.floor(Math.random()*9)+1;
         var index = Math.floor(Math.random() * squares);
@@ -143,8 +148,8 @@ function generateGame(num){
         }
         // console.log(arr);
         if(hasDuplicate(arr)){
-            console.log(`duplicate horizontal on row: ${i}`);
-            is_hor_ok = true;
+            // console.log(`duplicate horizontal on row: ${i}`);
+            is_hor_ok = false;
         }
     }
 
@@ -157,20 +162,33 @@ function generateGame(num){
         }
         // console.log(arr);
         if(hasDuplicate(arr)){
-            console.log(`duplicate vertical on col: ${i}`);
-            is_ver_ok = true;
+            // console.log(`duplicate vertical on col: ${i}`);
+            is_ver_ok = false;
         }
     }
 
     //check square
     for(var i=0; i<squares;i+=27){
-        for(var j=i; j < i+3; j++){
-            for(var z =0; z<3; z++){
-                console.log();
+        for(var j=i; j < i+9; j+=3){
+            // console.log(j);
+            var arr=[];
+            for(var z =j; z<j+3; z++){
+                // console.log(`${z} ${z+9} ${z+18}`);
+                if(inputs[z].value != "") arr.push(inputs[z].value);
+                if(inputs[z+9].value != "") arr.push(inputs[z+9].value);
+                if(inputs[z+18].value != "") arr.push(inputs[z+18].value);
+                    
             }
+            // console.log(arr);
+            if(hasDuplicate(arr)){
+                // console.log(`duplicate square on square: ${j}`);
+                is_sq_ok = false;
+            }
+            // console.log("------");
         }
     }
 
+    
 
 }
 
