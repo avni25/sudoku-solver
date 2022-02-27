@@ -4,7 +4,12 @@
     padding: 20px;
     background-color:rgb(177, 172, 172)
 }
-
+#title-container{
+    margin: auto;
+    display: inline-block;
+    position: relative;
+    width: 35%;
+}
 #main-container{
    display: inline-block;
    position: relative;
