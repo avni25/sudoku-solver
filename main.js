@@ -4,7 +4,6 @@ const solveButton = document.querySelector("#solve-btn");
 const solveButton2 = document.querySelector("#solve-btn2");
 const cleanButton = document.getElementById("clean-btn");
 const generateButton = document.getElementById("generate-btn");
-const testButton = document.getElementById("test-btn");
 const genInput = document.getElementById("gen-input");
 const resultText = document.getElementById("result-text");
 
@@ -14,7 +13,12 @@ const squares = 81;
 const min =0, max = 9;
 var N = 9;
 
-// https://rapidapi.com/sayantikag98/api/sudoku-solver2/
+/**
+ * https://rapidapi.com/sayantikag98/api/sudoku-solver2/
+ * Solve API button uses the api above to solve the given problem
+ * 
+ *  */ 
+
 
 for(var i=0;i<squares; i++){
     var t = "input-cell-"+i;
@@ -45,7 +49,11 @@ for(var i=27, j=54;i<=35; i++, j++){
     inputs[j].setAttribute("style", style);
 }
 
-
+/**
+ * This function gets the values i each cells and return a string 
+ * format that api can read
+ * @returns string in the format as API requests
+ */
 const getVals =() =>{
     var given_numbers=[];
     var arr=[];
@@ -73,10 +81,14 @@ const getVals =() =>{
             arr.push("x"+count+"x");
         }
     }
-    // console.log(arr.join(""));
     return arr.join("");
 }
 
+/**
+ * this function fill the cells with the values recieved from API
+ * @param {res} is an object retrieved from api. it contains properties
+ * as "answer", "canBeSolved"...etc 
+ */
 function fillCells(res){
     const inputs = document.querySelectorAll(".input-cell");
     if(res.canBeSolved && res.answer){
@@ -89,6 +101,7 @@ function fillCells(res){
     }
 }
 
+// cleans each cell on the grid
 function cleanCells(){
     const inputs = document.querySelectorAll(".input-cell");
     inputs.forEach(input => {
@@ -98,6 +111,10 @@ function cleanCells(){
     resultText.textContent = "";
 }
 
+/**
+ * This function solve the given problem with API.
+ * makes a request and returns data(answer). 
+ */
 function solve(){
     var d = "";    
     d = getVals();
@@ -122,23 +139,24 @@ function solve(){
       });
 }
 
-function generateGame(num){
-    cleanCells();
-    const inputs = document.querySelectorAll(".input-cell");
-    for(var i=0; i<num;i++){
-        var val = Math.floor(Math.random()*9)+1;
-        var index = Math.floor(Math.random() * squares);
-        inputs[index].value = val; 
-        inputs[index].setAttribute("style", "color: red;font-weight: bold;");
-    }
 
-    
-}
-
+/**
+ * this function looks for duplicate values in an array.
+ * 
+ * @param {array} arr 
+ * array to be searched
+ * @returns true if there is duplicate or false if not
+ */
 function hasDuplicate(arr){
     return (new Set(arr)).size !== arr.length;
 }
 
+/**
+ * this function generate problem to be solved.
+ * 
+ * @param {String} num 
+ * it decides how many numbers will be generated for problem in advance
+ */
 function generateSolvableGame(num){    
     const inputs = document.querySelectorAll(".input-cell");
     var count =0;
@@ -310,21 +328,13 @@ solveButton2.addEventListener("click", ()=>{
 cleanButton.addEventListener("click", cleanCells);
 generateButton.addEventListener("click", ()=>{
     if(parseInt(genInput.value)<=squares){
-        generateSolvableGame(parseInt(genInput.value));
-        console.log(generateSolvableGame(parseInt(genInput.value)));
+        generateSolvableGame(parseInt(genInput.value));        
     }else{
         resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
     }
     
 });
 
-testButton.addEventListener("click", ()=>{
-    if(parseInt(genInput.value)<=squares){
-        generateSolvableGame(parseInt(genInput.value));
-    }else{
-        resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
-    }
-});
 
 
 
