@@ -6,7 +6,10 @@
 }
 
 #main-container{
-   display: flex;
+   display: inline-block;
+   position: relative;
+   overflow: hidden;
+   width: 100%;
 }
 
 h1{
@@ -15,15 +18,16 @@ h1{
 }
 .button-container{
     width: 450px;
-    margin: auto;
-    
+    overflow: hidden;
+    padding: 3%;
 }
 
 #puzzle-board{
     width: 450px;
     height: 450px;
-    margin: auto;
-    
+    float: left;
+    /* position: relative;    */
+
 }
 
 #puzzle-board input{
