@@ -141,10 +141,12 @@ function hasDuplicate(arr){
 }
 
 function generateSolvableGame(num){
-    cleanCells();
+    
     const inputs = document.querySelectorAll(".input-cell");
     var count =0;
-    while(true){
+
+    var timer = setInterval(()=>{
+        cleanCells();
         var is_ver_ok =false;
         var is_hor_ok =false;
         var is_sq_ok = false;
@@ -165,7 +167,7 @@ function generateSolvableGame(num){
             }
             // console.log(arr);
             if(hasDuplicate(arr)){
-                console.log(`duplicate horizontal on row: ${i}`);
+                // console.log(`duplicate horizontal on row: ${i}`);
                 is_hor_ok = true;
             }
         }
@@ -179,7 +181,7 @@ function generateSolvableGame(num){
             }
             // console.log(arr);
             if(hasDuplicate(arr)){
-                console.log(`duplicate vertical on col: ${i}`);
+                // console.log(`duplicate vertical on col: ${i}`);
                 is_ver_ok = true;
             }
         }
@@ -196,9 +198,9 @@ function generateSolvableGame(num){
                     if(inputs[z+18].value != "") arr.push(inputs[z+18].value);
                         
                 }
-                console.log(arr);
+                // console.log(arr);
                 if(hasDuplicate(arr)){
-                    console.log(`duplicate square on square: ${j}`);
+                    // console.log(`duplicate square on square: ${j}`);
                     is_sq_ok = true;
                 }
                 // console.log("------");
@@ -207,11 +209,12 @@ function generateSolvableGame(num){
 
         count++;
         if(!is_hor_ok && !is_ver_ok && !is_sq_ok){
-            break;
+            //break;
+            clearInterval(timer);
         }
 
 
-    }
+    },100);
 
     console.log(count);
     
@@ -236,7 +239,7 @@ solveButton2.addEventListener("click", test);
 cleanButton.addEventListener("click", cleanCells);
 generateButton.addEventListener("click", ()=>{
     if(parseInt(genInput.value)<=squares){
-        generateGame(parseInt(genInput.value));
+        generateSolvableGame(parseInt(genInput.value));
     }else{
         resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
     }
