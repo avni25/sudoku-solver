@@ -10,7 +10,7 @@ const resultText = document.getElementById("result-text");
 
 
 const squares = 81;
-const min =0, max = 9;
+const min =1, max = 9;
 var N = 9;
 var sec = 10;
 /**
@@ -26,12 +26,22 @@ for(var i=0;i<squares; i++){
     var t = "cell-"+ row+"-"+col;
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
-    cell.setAttribute("min", min);
-    cell.setAttribute("max", max);
+    // cell.setAttribute("min", min);
+    // cell.setAttribute("max", max);
     cell.setAttribute("class", "input-cell");
     cell.setAttribute("id", t);    
     puzzleBoard.appendChild(cell);
-    cell.onchange = function(){print(cell.id);}
+    cell.onchange = function(){
+        print(cell.id, cell.value);
+        var regEx = /([1-9])/;        
+        if(regEx.test(cell.value) && cell.value.length ==1 && (cell.value.charCodeAt(0)>48 && cell.value.charCodeAt(0)<58) ){
+            console.log("valid: "+cell.value);
+            //check if valid for rules
+            
+        }else{
+            cell.value="";
+        }
+    }
 }
 
 function print(...vals){
