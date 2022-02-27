@@ -12,7 +12,7 @@ const resultText = document.getElementById("result-text");
 const squares = 81;
 const min =0, max = 9;
 var N = 9;
-var sec = 50;
+var sec = 10;
 /**
  * https://rapidapi.com/sayantikag98/api/sudoku-solver2/
  * Solve API button uses the api above to solve the given problem
