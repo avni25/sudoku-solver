@@ -2,7 +2,13 @@
     margin: auto;
     padding: 10px;
     padding: 20px;
+    background-color:rgb(177, 172, 172)
 }
+
+#main-container{
+   display: flex;
+}
+
 h1{
     margin-left: 35%;
     color: rgb(16, 50, 240);
