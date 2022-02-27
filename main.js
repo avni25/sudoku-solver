@@ -12,6 +12,7 @@ const resultText = document.getElementById("result-text");
 
 const squares = 81;
 const min =0, max = 9;
+var N = 9;
 
 // https://rapidapi.com/sayantikag98/api/sudoku-solver2/
 
@@ -84,7 +85,7 @@ function fillCells(res){
             inputs[i].value=res.answer[i];
         }
     }else{        
-        resultText.textContent = "No solution!";        
+        resultText.textContent = "No solution! (from API)";        
     }
 }
 
@@ -100,7 +101,6 @@ function cleanCells(){
 function solve(){
     var d = "";    
     d = getVals();
-    // console.log("solve: "+d);
     var options = {
         method: 'POST',
         url: 'https://sudoku-solver2.p.rapidapi.com/',
@@ -110,8 +110,7 @@ function solve(){
           'x-rapidapi-key': '9ff48dee7bmsh03eb472004792f3p14a609jsn3c96cd0b0524'
         },
         data: {
-          input: d
-          //'53x2x7x4x6x2x195x4x98x4x6x1x8x3x6x3x34x2x8x1x3x2x17x3x2x3x6x1x6x4x28x4x419x2x5x4x8x2x79'
+          input: d          
         }
       };
       
@@ -140,17 +139,17 @@ function hasDuplicate(arr){
     return (new Set(arr)).size !== arr.length;
 }
 
-function generateSolvableGame(num){
-    
+function generateSolvableGame(num){    
     const inputs = document.querySelectorAll(".input-cell");
     var count =0;
+    var res= [];
 
     var timer = setInterval(()=>{
         cleanCells();
         var is_ver_ok =false;
         var is_hor_ok =false;
         var is_sq_ok = false;
-
+        var temp=[];
         for(var i=0; i<num;i++){
             var val = Math.floor(Math.random()*9)+1;
             var index = Math.floor(Math.random() * squares);
@@ -210,6 +209,18 @@ function generateSolvableGame(num){
         count++;
         if(!is_hor_ok && !is_ver_ok && !is_sq_ok){
             //break;
+            for(var i=0; i<inputs.length;i+=9){
+                var temp =[];
+                for(var j=i;j<i+9;j++){
+                    if(inputs[j].value !=""){
+                        temp.push(parseInt(inputs[j].value));
+                    }else{
+                        temp.push(0);
+                    }
+                }
+                res.push(temp);
+            }
+            // console.log(res);
             clearInterval(timer);
         }
 
@@ -217,29 +228,90 @@ function generateSolvableGame(num){
     },100);
 
     console.log(count);
+    return res;
     
 }
 
+//----------------------------------------------------------------
+function solveSudoku(grid, row, col){		
+	if (row == N - 1 && col == N)
+		return true;
+	if (col == N){
+		row++;
+		col = 0;
+	}
 
+	if (grid[row][col] != 0)
+		return solveSudoku(grid, row, col + 1);
 
-
-
-
-function test(){
-    const inputs = document.querySelectorAll(".input-cell");    
-    for(var i=0; i<inputs.length;i++){
-        inputs[i].value = i;
-    }
+	for(let num = 1; num < 10; num++){	
+		if (isSafe(grid, row, col, num)){		
+			grid[row][col] = num;			
+			if (solveSudoku(grid, row, col + 1))
+				return true;
+		}		
+		grid[row][col] = 0;
+	}
+	return false;
 }
+
+function isSafe(grid, row, col, num){
+
+	for(let x = 0; x <= 8; x++)
+		if (grid[row][x] == num)
+			return false;
+
+	for(let x = 0; x <= 8; x++)
+		if (grid[x][col] == num)
+			return false;
+
+	let startRow = row - row % 3,
+		startCol = col - col % 3;
+		
+	for(let i = 0; i < 3; i++)
+		for(let j = 0; j < 3; j++)
+			if (grid[i + startRow][j + startCol] == num)
+				return false;
+
+	return true;
+}
+
+
+//-------------------------------------------------------------------
 
 
 
 solveButton.addEventListener("click", solve);
-solveButton2.addEventListener("click", test);
+solveButton2.addEventListener("click", ()=>{
+    var given_numbers=[];    
+    var arr=[];
+    var inputs = document.querySelectorAll(".input-cell");
+    inputs.forEach((input)=>{
+        if(input.value){
+            given_numbers.push(parseInt(input.value));
+        }else{
+            given_numbers.push(0);
+        }
+    });
+    console.log(given_numbers);    
+    while(given_numbers.length) arr.push(given_numbers.splice(0,N));
+    console.log(arr);
+
+    if (solveSudoku(arr, 0, 0)){
+        var vals = [].concat(...arr);
+        for(var i=0;i<vals.length;i++){
+            inputs[i].value = vals[i];
+        }
+        
+    }else{
+	    resultText.textContent = "no solution (from code)";
+    }
+});
 cleanButton.addEventListener("click", cleanCells);
 generateButton.addEventListener("click", ()=>{
     if(parseInt(genInput.value)<=squares){
         generateSolvableGame(parseInt(genInput.value));
+        console.log(generateSolvableGame(parseInt(genInput.value)));
     }else{
         resultText.textContent = `invalid input. cell number can not be more than ${squares}`;
     }
