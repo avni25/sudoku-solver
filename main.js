@@ -21,14 +21,21 @@ var sec = 10;
 
 
 for(var i=0;i<squares; i++){
-    var t = "input-cell-"+i;
+    var row = Math.floor(i/N);
+    var col = i%N;
+    var t = "cell-"+ row+"-"+col;
     const cell = document.createElement("input");
     cell.setAttribute("type", "number");
     cell.setAttribute("min", min);
     cell.setAttribute("max", max);
     cell.setAttribute("class", "input-cell");
-    cell.setAttribute("id", t);
+    cell.setAttribute("id", t);    
     puzzleBoard.appendChild(cell);
+    cell.onchange = function(){print(cell.id);}
+}
+
+function print(...vals){
+    console.log(vals);
 }
 
 for(var i=2;i<squares; i+=3){
